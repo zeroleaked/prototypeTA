@@ -118,7 +118,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             for (int i=0; i<ROW_LENGTH; i++) {
                 float average = accumulate[i]/(float) SAMPLE_LENGTH;
                 float wavelength = getWavelength(COL_OFFSET+i);
-                Serial.printf("%.2f\t%.2f\n", COL_OFFSET+i, wavelength, average);
+                Serial.printf("%.2f\t%.2f\n", wavelength, average);
                 blank->buf[i] = average;
             }
 
