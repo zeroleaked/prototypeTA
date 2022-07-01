@@ -118,7 +118,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             for (int i=0; i<ROW_LENGTH; i++) {
                 float average = accumulate[i]/(float) SAMPLE_LENGTH;
                 float wavelength = getWavelength(COL_OFFSET+i);
-                Serial.printf("%.2f\t%.2f\n", wavelength, average);
+                Serial.printf("%f\t%f\n", wavelength, average);
                 blank->buf[i] = average;
             }
 
@@ -155,7 +155,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
                 else {
                     absorbance = log10(baseline/average);
                 }
-                Serial.printf("%.2f\t%.2f\t%.2f\t%.2f\n", wavelength, average, baseline, absorbance);
+                Serial.printf("%f\t%f\t%f\t%f\n", wavelength, average, baseline, absorbance);
             }
 
             break; /* optional */
@@ -213,7 +213,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             for (int i=0; i<ROW_LENGTH; i++) {
                 float average = (accumulate[FILTER_LENGTH+i]+accumulate[i])/(float) SAMPLE_LENGTH/2.00;
                 float wavelength = getWavelength(COL_OFFSET+i);
-                Serial.printf("%.2f\t%.2f\n", wavelength, average);
+                Serial.printf("%f\t%f\n", wavelength, average);
                 blank->buf[i] = average;
             }
 
@@ -250,7 +250,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
                 else {
                     absorbance = log10(baseline/average);
                 }
-                Serial.printf("%.2f\t%.2f\t%.2f\t%.2f\n", wavelength, average, baseline, absorbance);
+                Serial.printf("%f\t%f\t%f\t%f\n", wavelength, average, baseline, absorbance);
             }
 
             break; /* optional */
