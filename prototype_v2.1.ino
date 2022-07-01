@@ -101,11 +101,11 @@ void loop() {
           command = FIXED_EXPOSURE_COM;
           break;
         }
-        case 'B': {
+        case 'V': {
           command = BLANK_COM;
           break;
         }
-        case 'A': {
+        case 'S': {
           command = ABSORBANCE_COM;
           break;
         }
@@ -119,6 +119,14 @@ void loop() {
         }
         case 'G': {
           command =  VAR_GAIN_COM;
+          break;
+        }
+        case 'B': {
+          command =  BLANK_FILTER_COM;
+          break;
+        }
+        case 'A': {
+          command =  ABSORBANCE_FILTER_COM;
           break;
         }
         default: {

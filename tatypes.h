@@ -13,6 +13,8 @@
 #define WL3_A 0.686618705
 #define WL3_B 209.1859712
 
+#define FILTER_LENGTH 4
+
 #define SAMPLE_LENGTH 20 // max 257
 
 typedef enum {
@@ -22,7 +24,9 @@ typedef enum {
     BLANK_COM, // 3
     ABSORBANCE_COM, // 4
     ROW_DETECT_COM, // 5, for finding diffraction row
-    VAR_GAIN_COM // for LED calibration
+    VAR_GAIN_COM, // for LED calibration
+    BLANK_FILTER_COM,
+    ABSORBANCE_FILTER_COM
 } command_t;
 
 typedef struct {

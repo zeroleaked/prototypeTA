@@ -190,6 +190,71 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
 
             break; /* optional */
         }
+        
+        case BLANK_FILTER_COM: {
+            Serial.printf("TAKING FILTERED BASELINE\n");
+            sensor_t * s = esp_camera_sensor_get();
+            s->set_aec_value(s, FIXED_EXPOSURE);
+
+            camera_fb_t * fb;
+
+            uint16_t accumulate[ROW_LENGTH+FILTER_LENGTH] = {0};
+            for (int j=0; j<SAMPLE_LENGTH; j++) {
+                fb = esp_camera_fb_get(); // bottleneck
+                for (int i=0; i<ROW_LENGTH+FILTER_LENGTH; i++) {
+                    uint8_t val = getPixel(fb, DIFFRACTION_ROW, COL_OFFSET-FILTER_LENGTH+i);
+                    accumulate[i] += val;
+                }
+
+                esp_camera_fb_return(fb);
+            }
+            
+            Serial.println("wl\tval");
+            for (int i=0; i<ROW_LENGTH; i++) {
+                float average = (accumulate[FILTER_LENGTH+i]+accumulate[i])/(float) SAMPLE_LENGTH/2.00;
+                float wavelength = getWavelength(COL_OFFSET+i);
+                Serial.printf("%.2f\t%.2f\n", wavelength, average);
+                blank->buf[i] = average;
+            }
+
+            break; /* optional */
+        }
+        
+        case ABSORBANCE_FILTER_COM: {
+            Serial.printf("TAKING FILTERED ABSORBANCE\n");
+            sensor_t * s = esp_camera_sensor_get();
+            s->set_aec_value(s, FIXED_EXPOSURE);
+
+            camera_fb_t * fb;
+
+            uint16_t accumulate[ROW_LENGTH+FILTER_LENGTH] = {0};
+            for (int j=0; j<SAMPLE_LENGTH; j++) {
+                fb = esp_camera_fb_get(); // bottleneck
+                for (int i=0; i<ROW_LENGTH+FILTER_LENGTH; i++) {
+                    uint8_t val = getPixel(fb, DIFFRACTION_ROW, COL_OFFSET-FILTER_LENGTH+i);
+                    accumulate[i] += val;
+                }
+
+                esp_camera_fb_return(fb);
+            }
+            
+            Serial.println("wl\tsample\tbaseline\tabsorbance");
+            for (int i=0; i<ROW_LENGTH; i++) {
+                float average = (accumulate[FILTER_LENGTH+i]+accumulate[i])/(float) SAMPLE_LENGTH/2.00;
+                float wavelength = getWavelength(COL_OFFSET+i);
+                float baseline = blank->buf[i];
+                float absorbance;
+                if (average >= baseline) {
+                    absorbance = 0;
+                }
+                else {
+                    absorbance = log10(baseline/average);
+                }
+                Serial.printf("%.2f\t%.2f\t%.2f\t%.2f\n", wavelength, average, baseline, absorbance);
+            }
+
+            break; /* optional */
+        }
 
         case ROW_DETECT_COM: {
             Serial.printf("TOTAL FOR EACH ROW\n");
