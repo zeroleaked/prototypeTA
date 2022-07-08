@@ -165,6 +165,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("GAIN %d\n", arg1);
             sensor_t * s = esp_camera_sensor_get();
             s->set_agc_gain(s, arg1);
+            s->set_aec_value(s, FIXED_EXPOSURE);
 
             camera_fb_t * fb;
 

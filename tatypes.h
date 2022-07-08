@@ -1,6 +1,6 @@
 #define FIXED_EXPOSURE 700
 
-#define DIFFRACTION_ROW 512
+#define DIFFRACTION_ROW 534
 #define COL_OFFSET 286
 #define ROW_LENGTH 430
 
@@ -15,7 +15,7 @@
 
 #define FILTER_LENGTH 4
 
-#define SAMPLE_LENGTH 20 // max 257
+#define SAMPLE_LENGTH 10 // max 257
 
 typedef enum {
     NO_COM, // 0
