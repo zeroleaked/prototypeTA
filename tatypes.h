@@ -1,4 +1,5 @@
-#define FIXED_EXPOSURE 200
+#define FIXED_EXPOSURE 50
+#define FIXED_GAIN 4
 
 #define DIFFRACTION_ROW 500
 

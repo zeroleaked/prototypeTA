@@ -44,6 +44,9 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("DEFAULT EXPOSURE %d\n", FIXED_EXPOSURE);
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
+            s->set_agc_gain(s, FIXED_GAIN);
+
+            
 
             camera_fb_t * fb;
 
@@ -72,6 +75,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("EXPOSURE %d\n", arg1);
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, arg1);
+            s->set_agc_gain(s, FIXED_GAIN);
 
             camera_fb_t * fb;
 
@@ -100,6 +104,8 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("TAKING BASELINE\n");
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
+            s->set_agc_gain(s, FIXED_GAIN);
+
 
             camera_fb_t * fb;
 
@@ -129,6 +135,8 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("TAKING ABSORBANCE\n");
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
+            s->set_agc_gain(s, FIXED_GAIN);
+
 
             camera_fb_t * fb;
 
@@ -167,6 +175,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             s->set_agc_gain(s, arg1);
             s->set_aec_value(s, FIXED_EXPOSURE);
 
+
             camera_fb_t * fb;
 
             uint16_t accumulate[ROW_LENGTH] = {0};
@@ -187,7 +196,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
                 Serial.printf("%d\t%f\t%f\n", COL_OFFSET+i, wavelength, average);
             }
 
-            s->set_agc_gain(s, 0);
+            s->set_agc_gain(s, FIXED_GAIN);
 
             break; /* optional */
         }
@@ -196,6 +205,8 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("TAKING FILTERED BASELINE\n");
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
+            s->set_agc_gain(s, FIXED_GAIN);
+
 
             camera_fb_t * fb;
 
@@ -225,6 +236,8 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("TAKING FILTERED ABSORBANCE\n");
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
+            s->set_agc_gain(s, FIXED_GAIN);
+
 
             camera_fb_t * fb;
 
@@ -261,6 +274,8 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             Serial.printf("TOTAL FOR EACH ROW\n");
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
+            s->set_agc_gain(s, FIXED_GAIN);
+
             camera_fb_t * fb;
             fb = esp_camera_fb_get();
 
