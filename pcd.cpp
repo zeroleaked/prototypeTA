@@ -103,6 +103,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
         }
         
         case BLANK_COM: {
+            for (int i=0; i < 30; i++) {
             Serial.printf("TAKING BASELINE\n");
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
@@ -132,11 +133,13 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
                 Serial.printf("%f\t%f\n", wavelength, average);
                 blank->buf[i] = average;
             }
+            }
 
             break; /* optional */
         }
         
         case ABSORBANCE_COM: {
+            for (int i=0; i < 30; i++) {
             Serial.printf("TAKING ABSORBANCE\n");
             sensor_t * s = esp_camera_sensor_get();
             s->set_aec_value(s, FIXED_EXPOSURE);
@@ -172,6 +175,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
                     absorbance = log10(baseline/average);
                 }
                 Serial.printf("%f\t%f\t%f\t%f\n", wavelength, average, baseline, absorbance);
+            }
             }
 
             break; /* optional */
