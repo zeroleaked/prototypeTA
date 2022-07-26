@@ -19,6 +19,7 @@
 #include "camera_pins.h"
 #include "tatypes.h"
 
+
 esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank);
 
 // globals
@@ -57,6 +58,8 @@ void setup() {
   config.frame_size = FRAMESIZE_XGA;
   config.fb_count = 1;
 
+
+
 #if defined(CAMERA_MODEL_ESP_EYE)
   pinMode(13, INPUT_PULLUP);
   pinMode(14, INPUT_PULLUP);
@@ -81,6 +84,8 @@ void setup() {
   res = s->set_gain_ctrl(s, 0);
   
   blank.buf = blank_buf;
+
+  pinMode(LAMP_PIN, OUTPUT);
 }
 
 void loop() {

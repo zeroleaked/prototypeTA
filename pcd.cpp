@@ -52,7 +52,9 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
 
             uint16_t accumulate[ROW_LENGTH] = {0};
             for (int j=0; j<SAMPLE_LENGTH; j++) {
+                digitalWrite(LAMP_PIN, HIGH);
                 fb = esp_camera_fb_get(); // bottleneck
+                digitalWrite(LAMP_PIN, LOW);
                 for (int i=0; i<ROW_LENGTH; i++) {
                     uint8_t val = getPixel(fb, DIFFRACTION_ROW, COL_OFFSET+i);
                     accumulate[i] += val;
@@ -110,6 +112,8 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             camera_fb_t * fb;
 
             uint16_t accumulate[ROW_LENGTH] = {0};
+            digitalWrite(LAMP_PIN, HIGH);
+            delay(1000);
             for (int j=0; j<SAMPLE_LENGTH; j++) {
                 fb = esp_camera_fb_get(); // bottleneck
                 for (int i=0; i<ROW_LENGTH; i++) {
@@ -119,6 +123,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
 
                 esp_camera_fb_return(fb);
             }
+            digitalWrite(LAMP_PIN, LOW);
             
             Serial.println("wl\tval");
             for (int i=0; i<ROW_LENGTH; i++) {
@@ -141,6 +146,8 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             camera_fb_t * fb;
 
             uint16_t accumulate[ROW_LENGTH] = {0};
+            digitalWrite(LAMP_PIN, HIGH);
+            delay(1000);
             for (int j=0; j<SAMPLE_LENGTH; j++) {
                 fb = esp_camera_fb_get(); // bottleneck
                 for (int i=0; i<ROW_LENGTH; i++) {
@@ -150,6 +157,7 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
 
                 esp_camera_fb_return(fb);
             }
+            digitalWrite(LAMP_PIN, LOW);
             
             Serial.println("wl\tsample\tbaseline\tabsorbance");
             for (int i=0; i<ROW_LENGTH; i++) {
@@ -277,7 +285,9 @@ esp_err_t command_handler(command_t command, uint16_t arg1, blank_t * blank) {
             s->set_agc_gain(s, FIXED_GAIN);
 
             camera_fb_t * fb;
+            digitalWrite(LAMP_PIN, HIGH);
             fb = esp_camera_fb_get();
+            digitalWrite(LAMP_PIN, LOW);
 
             Serial.println("i\ttotal");
             uint32_t max_val = 0;
